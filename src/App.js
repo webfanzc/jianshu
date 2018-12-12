@@ -11,9 +11,9 @@ class App extends Component {
       <div className="App">
         <Provider store={store}>
           <Fragment>
-            <Header />
             <BrowserRouter>
               <Fragment>
+                <Header />
                 {router.map(item => (
                   <Route
                     key={item.path}

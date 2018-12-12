@@ -8,7 +8,7 @@ export const router = [
     exact: true
   },
   {
-    path: '/detail',
+    path: '/detail/:id',
     component: Detail,
     exact: true
   }

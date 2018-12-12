@@ -21,7 +21,7 @@ export default (state = initialState, { type, payload }) => {
       return state.set('focused', payload.state)
     case GET_HOT_LIST_SUCCESS:
       return state.merge({
-        hotList: payload.list,
+        hotList: immutable.fromJS(payload.list),
         totalPage: payload.totalPage
       })
     case CHANGE_HOTLIST_PAGE:

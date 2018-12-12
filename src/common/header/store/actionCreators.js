@@ -5,7 +5,6 @@ import {
   CHANGE_HOTLIST_PAGE,
   CHANGE_MOUSEIN_STATE
 } from './actionTypes'
-import { fromJS } from 'immutable'
 export const changeInputFocusStateAction = state => ({
   type: CHANGE_INPUT_FOCUS_STATE,
   payload: {
@@ -18,7 +17,7 @@ export const getHotListAction = () => ({
 export const getHotListSuccessAction = list => ({
   type: GET_HOT_LIST_SUCCESS,
   payload: {
-    list: fromJS(list),
+    list: list,
     totalPage: Math.ceil(list.length / 10)
   }
 })

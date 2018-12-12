@@ -81,4 +81,69 @@ export const RecommendListItem = styled.li`
   margin: 10px 0;
   height: 50px;
   background: url(${props => props.imgURL}) center center / cover;
+  cursor: pointer;
+`
+export const WriterWrapper = styled.div``
+export const WriterTitle = styled.div`
+  color: #999;
+  font-size: 13px;
+  height: 20px;
+  .icon-spin {
+    display: inline-block;
+    transition: all 0.3s ease-in-out;
+    transform-origin: center center;
+    transform: rotate(0deg);
+  }
+`
+export const WriterList = styled.ul``
+export const WriterListItem = styled.li`
+  margin-top: 15px;
+  img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    float: left;
+  }
+  div {
+    float: left;
+    padding-left: 10px;
+    span {
+      color: #999;
+      font-size: 12px;
+    }
+  }
+  .follow {
+    float: right;
+    color: #42c02e;
+    font-weight: bold;
+  }
+`
+export const WriterFindMore = styled.a`
+  display: block;
+  width: 100%;
+  line-height: 36px;
+  border: 1px solid #ccc;
+  color: #999;
+  border-radius: 5px;
+  text-align: center;
+  margin-top: 20px;
+`
+export const LoadMore = styled(WriterFindMore)`
+  border-radius: 20px;
+  background-color: #a5a5a5;
+  color: #fff;
+`
+export const BackToTop = styled.div`
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  font-size: 24px;
+  color: #ccc;
+  position: fixed;
+  right: 100px;
+  bottom: 100px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  cursor: pointer;
 `

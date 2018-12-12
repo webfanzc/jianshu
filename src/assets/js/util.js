@@ -46,3 +46,22 @@ export const genRoot = sagas => {
   })
   return sagaArr
 }
+/**
+ * @description 防抖
+ * @param {Function} method 方法
+ * @param {Number} delay 时间 毫秒
+ * @returns
+ */
+export const debounce = (method, delay) => {
+  let timeout
+  return function() {
+    let context = this //传给目标函数
+    clearTimeout(timeout)
+    timeout = setTimeout(
+      () => {
+        method.apply(context, arguments)
+      }, //修复
+      delay
+    )
+  }
+}

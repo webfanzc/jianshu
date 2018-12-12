@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { HomeWrapper, HomeContent, HomeAside } from './style'
+import React, { PureComponent } from 'react'
+import { HomeWrapper, HomeContent, HomeAside, BackToTop } from './style'
 import { Carousel } from 'element-react'
 import banner01 from '../../static/images/banner01.jpg'
 import banner02 from '../../static/images/banner02.jpg'
@@ -15,11 +15,28 @@ import Writer from './components/writer'
 import { connect } from 'react-redux'
 import { store } from './../../store/index'
 import {
-  getTopicDataAction,
-  getListDataAction,
-  getRecommendDataAction
+  getHomeDataAction,
+  changeBackToTopStateAction
 } from './store/actionCreators'
-class Home extends Component {
+import { debounce } from '../../assets/js/util'
+class Home extends PureComponent {
+  changeScrollState = () => {
+    return debounce(() => {
+      const { showBackToTop } = this.props
+      const scrollTop =
+        document.documentElement.scrollTop || document.body.scrollTop
+
+      if (scrollTop > window.innerHeight && !showBackToTop) {
+        store.dispatch(changeBackToTopStateAction(true))
+      }
+      if (scrollTop < window.innerHeight && showBackToTop) {
+        store.dispatch(changeBackToTopStateAction(false))
+      }
+    }, 100)
+  }
+  watchScroll = showBackToTop => {
+    window.addEventListener('scroll', this.changeScrollState())
+  }
   render() {
     const imgArr = [
       banner01,
@@ -30,7 +47,7 @@ class Home extends Component {
       banner06,
       banner07
     ]
-    const { topicData, listData, recommendData } = this.props
+    const { showBackToTop, scrollTo } = this.props
     return (
       <HomeWrapper className="clearfix">
         <HomeContent>
@@ -41,28 +58,67 @@ class Home extends Component {
               </Carousel.Item>
             ))}
           </Carousel>
-          <Topic topicData={topicData} />
-          <List listData={listData}>123</List>
+          <Topic />
+          <List />
         </HomeContent>
         <HomeAside>
           <Recommend />
-          <Writer>123</Writer>
+          <Writer />
         </HomeAside>
+        {showBackToTop && (
+          <BackToTop
+            onClick={() => {
+              scrollTo(0, 300)
+            }}
+          >
+            ^
+          </BackToTop>
+        )}
       </HomeWrapper>
     )
   }
-  componentWillMount() {
-    store.dispatch(getTopicDataAction())
-    store.dispatch(getListDataAction())
-    store.dispatch(getRecommendDataAction())
+  componentDidMount() {
+    this.props.getHomeData()
+    this.watchScroll()
+  }
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.changeScrollState())
   }
 }
 const mapStateToProps = state => ({
-  topicData: state.getIn(['home', 'topicData']).toJS(),
-  listData: state.getIn(['home', 'listData']).toJS()
+  showBackToTop: state.getIn(['home', 'showBackToTop'])
 })
 
-const mapDispatchToProps = dispath => ({})
+const mapDispatchToProps = dispath => ({
+  getHomeData() {
+    store.dispatch(getHomeDataAction())
+  },
+  scrollTo(position, timeout) {
+    let scrollTop =
+        document.documentElement.scrollTop || document.body.scrollTop,
+      direction = position - scrollTop > 0 ? 1 : -1,
+      distance = Math.abs(position - scrollTop),
+      split = distance / 50,
+      _timeout
+
+    if (position !== scrollTop) {
+      timeout = timeout || 1000
+      split *= direction
+
+      _timeout = setInterval(function() {
+        scrollTop += split
+        distance -= Math.abs(split)
+        if (0 >= distance) {
+          window.scrollTo(0, position)
+          clearInterval(_timeout)
+          _timeout = null
+        } else {
+          window.scrollTo(0, scrollTop)
+        }
+      }, timeout / 100)
+    }
+  }
+})
 
 export default connect(
   mapStateToProps,

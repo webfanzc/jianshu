@@ -1,38 +1,32 @@
 import {
-  GET_TOPIC_DATA,
-  GET_TOPIC_DATA_SUCCESS,
-  GET_LIST_DATA,
-  GET_LIST_DATA_SUCCESS,
-  GET_RECOMMEND_DATA,
-  GET_RECOMMEND_DATA_SUCCESS
+  GET_HOME_DATA,
+  GET_HOME_DATA_SUCCESS,
+  GET_MORE_LIST,
+  GET_MORE_LIST_SUCCESS,
+  CHANGE_BACK_TO_TOP_STATE
 } from './actionTypes'
-import { fromJS } from 'immutable'
 
-export const getTopicDataAction = () => ({
-  type: GET_TOPIC_DATA
+export const getHomeDataAction = () => ({
+  type: GET_HOME_DATA
 })
-
-export const getTopicDataSucAction = data => ({
-  type: GET_TOPIC_DATA_SUCCESS,
+export const getHomeDataSucAction = data => ({
+  type: GET_HOME_DATA_SUCCESS,
   payload: {
-    data: fromJS(data)
+    data
   }
 })
-export const getListDataAction = () => ({
-  type: GET_LIST_DATA
+export const getMoreListAction = () => ({
+  type: GET_MORE_LIST
 })
-export const getListDataSucAction = data => ({
-  type: GET_LIST_DATA_SUCCESS,
+export const getMoreListSuccess = data => ({
+  type: GET_MORE_LIST_SUCCESS,
   payload: {
-    data: fromJS(data)
+    data
   }
 })
-export const getRecommendDataAction = () => ({
-  type: GET_RECOMMEND_DATA
-})
-export const getRecommendDataSucAction = data => ({
-  type: GET_RECOMMEND_DATA_SUCCESS,
+export const changeBackToTopStateAction = state => ({
+  type: CHANGE_BACK_TO_TOP_STATE,
   payload: {
-    data: fromJS(data)
+    state
   }
 })

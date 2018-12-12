@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import {
   HeaderWrapper,
@@ -17,13 +17,16 @@ import {
   HotListItem
 } from './style.jsx'
 import { actionCreators } from './store'
+import { Link } from 'react-router-dom'
 
-class Header extends Component {
+class Header extends PureComponent {
   render() {
     const { focused, changeFocusState, hotList, mouseIn } = this.props
     return (
       <HeaderWrapper>
-        <Logo href="/" />
+        <Link to="/">
+          <Logo />
+        </Link>
         <Nav>
           <NavItem className="left active">
             <Icon className="iconfont icon-daohanglaiyuan" />

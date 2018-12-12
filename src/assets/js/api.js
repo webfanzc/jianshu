@@ -1,18 +1,9 @@
 import Axios from 'axios'
 
-export const getInitList = async () => {
-  const res = await Axios.get('/hotList')
-  return res
-}
-export const getTopicData = async () => {
-  const res = await Axios.get('/topicList')
-  return res
-}
-export const getListData = async () => {
-  const res = await Axios.get('/listData')
-  return res
-}
-export const getRecommendData = async () => {
-  const res = await Axios.get('/recommendData')
-  return res
-}
+export const getInitList = async () => await Axios.get('/api/hotList.json')
+
+export const getHomeData = async () => await Axios.get('/api/homeData.json')
+
+export const getMoreList = async () => await Axios.get('/api/moreData.json')
+
+export const getArticle = async () => await Axios.get('/api/articleData.json')

@@ -1,50 +1,29 @@
 import * as apis from '../../../assets/js/api'
-import {
-  getTopicDataSucAction,
-  getListDataSucAction,
-  getRecommendDataSucAction
-} from './actionCreators'
+import { getHomeDataSucAction, getMoreListSuccess } from './actionCreators'
 import { put, takeEvery } from 'redux-saga/effects'
-import {
-  GET_TOPIC_DATA,
-  GET_LIST_DATA,
-  GET_RECOMMEND_DATA
-} from './actionTypes'
+import { GET_HOME_DATA, GET_MORE_LIST } from './actionTypes'
 
-function* getTopicData() {
+function* getHomeData() {
   try {
-    const res = yield apis.getTopicData()
-    const action = getTopicDataSucAction(res.data)
+    const res = yield apis.getHomeData()
+    const action = getHomeDataSucAction(res.data)
     yield put(action)
   } catch (error) {
-    console.log(error, 'getTopicDataError')
+    console.log(error, 'getHomeDataError')
   }
 }
-
-function* getListData() {
+function* getMoreData() {
   try {
-    const res = yield apis.getListData()
-    const action = getListDataSucAction(res.data)
+    const res = yield apis.getMoreList()
+    const action = getMoreListSuccess(res.data)
     yield put(action)
   } catch (error) {
-    console.log(error, 'getTopicDataError')
+    console.log(error, 'getMoreDataError')
   }
 }
-function* getRecommendData() {
-  try {
-    const res = yield apis.getRecommendData()
-    const action = getRecommendDataSucAction(res.data)
-    yield put(action)
-  } catch (error) {
-    console.log(error, 'getRecommendDataError')
-  }
+export function* watchHomeDataSaga() {
+  yield takeEvery(GET_HOME_DATA, getHomeData)
 }
-export function* watchGetTopicDataSaga() {
-  yield takeEvery(GET_TOPIC_DATA, getTopicData)
-}
-export function* watchGetListDataSaga() {
-  yield takeEvery(GET_LIST_DATA, getListData)
-}
-export function* watchGetRecommendListDataSaga() {
-  yield takeEvery(GET_RECOMMEND_DATA, getRecommendData)
+export function* watchMoreDataSaga() {
+  yield takeEvery(GET_MORE_LIST, getMoreData)
 }
